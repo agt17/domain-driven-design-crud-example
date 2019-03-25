@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VuelingExam.Infrastructure.Contracts.Repository.Interfaces
 {
-    public interface IReadAll<T>
+    public interface IReadAll<U>
     {
-        List<T> ReadAll();
+        List<U> ReadAll();
     }
 }

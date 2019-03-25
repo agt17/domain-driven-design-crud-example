@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace VuelingExam.Infrastructure.Contracts.Repository.Interfaces
 {
-    public interface IReadById<out U>
+    public interface IStudentRepository<T, U> : ICreate<T, U>, IReadAll<U>, IReadById<U>
     {
-        U ReadById(int id);
     }
 }

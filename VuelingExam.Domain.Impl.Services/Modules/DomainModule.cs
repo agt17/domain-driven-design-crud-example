@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VuelingExam.Common.Logic.Logging.Adapters;
+using VuelingExam.Common.Logic.Logging.Interfaces;
+using VuelingExam.Domain.BusinessEntities;
 using VuelingExam.Infrastructure.Contracts.Repository.Interfaces;
 using VuelingExam.Infrastructure.DataModel;
 using VuelingExam.Infrastructure.Impl.Repository.Modules;
@@ -15,22 +18,10 @@ namespace VuelingExam.Domain.Impl.Services.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterModule(new InfrastructureModule());
 
             builder
-                .RegisterType<EnrollmentRepository>()
-                .As<IRepository<Enrollment>>()
-                .InstancePerRequest();
-
-            builder
-                .RegisterType<StudentRepository>()
-                .As<IRepository<Student>>()
-                .InstancePerRequest();
-
-            builder
-                .RegisterType<SubjectRepository>()
-                .As<IRepository<Subject>>()
-                .InstancePerRequest();
+                .RegisterType<SerilogAdapter>()
+                .As<ILogger>();
 
             base.Load(builder);
         }

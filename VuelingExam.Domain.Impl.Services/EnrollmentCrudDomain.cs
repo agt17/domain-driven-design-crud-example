@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 using VuelingExam.Common.Logic.Logging.Interfaces;
 using VuelingExam.Domain.BusinessEntities;
 using VuelingExam.Domain.Impl.Services.Exceptions;
-using VuelingExam.Domain.Impl.Services.Interfaces;
 using VuelingExam.Infrastructure.Contracts.Repository.Interfaces;
 using VuelingExam.Infrastructure.DataModel;
 
 namespace VuelingExam.Domain.Impl.Services
 {
-    public class EnrollmentCrudDomain : IDomainRepository<EnrollmentEntity>
+    public class EnrollmentCrudDomain// : IDomainRepository<EnrollmentEntity>
     {
-        private readonly IRepository<Enrollment> Repository;
+        /*private readonly IRepository<Enrollment> Repository;
         private readonly ILogger log;
 
         public EnrollmentCrudDomain(IRepository<Enrollment> repository, ILogger logger)
@@ -143,6 +142,6 @@ namespace VuelingExam.Domain.Impl.Services
                 System.Reflection.MethodBase.GetCurrentMethod().Name);
 
             return rowsAffected;
-        }
+        }*/
     }
 }

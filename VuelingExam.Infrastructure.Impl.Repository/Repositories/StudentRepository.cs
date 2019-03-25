@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VuelingExam.Common.Automapper;
 using VuelingExam.Common.Logic.Logging.Interfaces;
+using VuelingExam.Domain.BusinessEntities;
 using VuelingExam.Infrastructure.Contracts.Repository.Interfaces;
 using VuelingExam.Infrastructure.DataModel;
 using VuelingExam.Infrastructure.Impl.Repository.Exceptions;
 
 namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
 {
-    public class StudentRepository : IRepository<Student>
+    public class StudentRepository : IStudentRepository<StudentEntity, Student>
     {
-        private readonly static string connectionString = "server=localhost;database=School;Integrated Security=SSPI;";
+        //private readonly static string connectionString = "server=localhost;database=School;Integrated Security=SSPI;";
         private readonly ILogger log;
 
         public StudentRepository(ILogger logger)
@@ -22,12 +26,72 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
             this.log = logger;
         }
 
-        public Student Create(Student model)
+        public Student Create(StudentEntity model)
         {
             log.Debug(StringResources.DebugMethod + System.Reflection.MethodBase.GetCurrentMethod().Name +
-                StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                   StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
             try
+            {
+                AutomapperClass map = new AutomapperClass();
+                Student student = map.Map<StudentEntity, Student>(model);
+
+                using (var db = new SchoolEntities())
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    db.Student.Add(student);
+                    foreach (Enrollment enrollment in student.Enrollment)
+                    {
+                        db.Enrollment.Add(enrollment);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            #region Exceptions
+            catch (ObjectDisposedException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            catch (InvalidOperationException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            catch (DbUpdateException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            catch (NotSupportedException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            #endregion
+            /*try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
@@ -66,7 +130,7 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
                 throw new VuelingInfrastructureException(
                     ex.Message, ex.InnerException);
             }
-            #endregion
+            #endregion*/
 
             Student StudentRead = ReadById(model.Id);
 
@@ -74,10 +138,34 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
                         System.Reflection.MethodBase.GetCurrentMethod().Name);
             return StudentRead;
         }
-
+        
         public List<Student> ReadAll()
         {
-            List<Student> StudentsList = new List<Student>();
+            log.Debug(StringResources.DebugMethod + System.Reflection.MethodBase.GetCurrentMethod().Name +
+                   StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+            List<Student> StudentsList;
+
+            try
+            {
+                using (var db = new SchoolEntities())
+                {
+                    StudentsList = db.Student.ToList();
+                }
+            }
+            #region Exceptions
+            catch (ArgumentNullException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            #endregion
+
+            return StudentsList;
+
+            /*List<Student> StudentsList = new List<Student>();
 
             log.Debug(StringResources.DebugMethod + System.Reflection.MethodBase.GetCurrentMethod().Name +
                 StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -148,12 +236,35 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
             }
             #endregion
 
-            return StudentsList;
+            return StudentsList;*/
         }
 
         public Student ReadById(int id)
         {
             log.Debug(StringResources.DebugMethod + System.Reflection.MethodBase.GetCurrentMethod().Name +
+                   StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+            Student StudentRead = null;
+
+            try
+            {
+                using (var db = new SchoolEntities())
+                {
+                    StudentRead = db.Student.Where(s => s.Id == id).FirstOrDefault();
+                }
+            }
+            #region Exceptions
+            catch (ArgumentNullException ex)
+            {
+                log.Error(ex.Message);
+                log.Info(ex.StackTrace);
+                throw new VuelingInfrastructureException(
+                    ex.Message, ex.InnerException);
+            }
+            #endregion
+
+            return StudentRead;
+            /*log.Debug(StringResources.DebugMethod + System.Reflection.MethodBase.GetCurrentMethod().Name +
                 StringResources.DebugClass + System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
             Student Student = null;
@@ -227,10 +338,11 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
             log.Debug(Student +
                 System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            return Student;
+            return Student;*/
         }
 
-        public Student Update(int id, Student model)
+        /*
+        public Student Update(int id, StudentEntity model)
         {
             Student modelRead = null;
 
@@ -335,7 +447,7 @@ namespace VuelingExam.Infrastructure.Impl.Repository.Repositories
             #endregion
 
             return rowsAffected;
-        }
+        }*/
 
     }
 }

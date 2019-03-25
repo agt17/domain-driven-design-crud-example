@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VuelingExam.Infrastructure.Contracts.Repository.Interfaces
 {
-    public interface IDelete<T>
+    public interface IDelete
     {
         int Delete(int id);
     }

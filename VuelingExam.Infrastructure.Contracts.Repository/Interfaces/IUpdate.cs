@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VuelingExam.Infrastructure.Contracts.Repository.Interfaces
 {
-    public interface IUpdate<T>
+    public interface IUpdate<in T, out U>
     {
-        T Update(int id, T model);
+        U Update(int id, T model);
     }
 }

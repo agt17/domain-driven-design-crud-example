@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VuelingExam.Infrastructure.Contracts.Repository.Interfaces
 {
-    public interface ICreate<T>
+    public interface ICreate<in T, out U>
     {
-        T Create(T model);
+        U Create(T model);
     }
 }

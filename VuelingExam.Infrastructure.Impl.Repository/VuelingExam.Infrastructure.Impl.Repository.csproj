@@ -34,6 +34,7 @@
     <Reference Include="Autofac, Version=4.8.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,14 +48,39 @@
     <Compile Include="Exceptions\VuelingInfrastructureException.cs" />
     <Compile Include="Modules\InfrastructureModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\StudentRepository.cs" />
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VuelingExam.Common.Automapper\VuelingExam.Common.Automapper.csproj">
+      <Project>{53E081EF-4605-4BE8-83CF-EF00F15587C6}</Project>
+      <Name>VuelingExam.Common.Automapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VuelingExam.Common.Logic\VuelingExam.Common.Logic.csproj">
       <Project>{B76685BE-9421-4199-A998-952666729A13}</Project>
       <Name>VuelingExam.Common.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Domain.BusinessEntities\VuelingExam.Domain.BusinessEntities.csproj">
+      <Project>{4A6E16FD-A8D5-4065-B57F-2ADC83775137}</Project>
+      <Name>VuelingExam.Domain.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Infrastructure.Contracts.Repository\VuelingExam.Infrastructure.Contracts.Repository.csproj">
+      <Project>{B259853E-CA82-43AC-8093-E48FCC8AABBB}</Project>
+      <Name>VuelingExam.Infrastructure.Contracts.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Infrastructure.DataModel\VuelingExam.Infrastructure.DataModel.csproj">
+      <Project>{44161CAF-FECD-45E2-9514-11F7C95142B0}</Project>
+      <Name>VuelingExam.Infrastructure.DataModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

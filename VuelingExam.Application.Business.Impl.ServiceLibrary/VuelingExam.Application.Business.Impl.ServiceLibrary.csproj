@@ -44,11 +44,62 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\VuelingApplicationException.cs" />
+    <Compile Include="StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UniversityApplication.cs" />
     <Compile Include="Modules\ApplicationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VuelingExam.Application.Business.Contract.ServiceLibrary\VuelingExam.Application.Business.Contracts.ServiceLibrary.csproj">
+      <Project>{341891E1-3D2B-4096-A803-8BB37C46D22B}</Project>
+      <Name>VuelingExam.Application.Business.Contracts.ServiceLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Application.DTO\VuelingExam.Application.DTO.csproj">
+      <Project>{C4715000-3CDC-4E00-AE89-22C3E96C7D3B}</Project>
+      <Name>VuelingExam.Application.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Common.Automapper\VuelingExam.Common.Automapper.csproj">
+      <Project>{53E081EF-4605-4BE8-83CF-EF00F15587C6}</Project>
+      <Name>VuelingExam.Common.Automapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Common.Logic\VuelingExam.Common.Logic.csproj">
+      <Project>{B76685BE-9421-4199-A998-952666729A13}</Project>
+      <Name>VuelingExam.Common.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Domain.BusinessEntities\VuelingExam.Domain.BusinessEntities.csproj">
+      <Project>{4A6E16FD-A8D5-4065-B57F-2ADC83775137}</Project>
+      <Name>VuelingExam.Domain.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Domain.Impl.Services\VuelingExam.Domain.Impl.Services.csproj">
+      <Project>{DD368D7F-D44A-405A-9152-D98F683D821A}</Project>
+      <Name>VuelingExam.Domain.Impl.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Infrastructure.Contracts.Repository\VuelingExam.Infrastructure.Contracts.Repository.csproj">
+      <Project>{B259853E-CA82-43AC-8093-E48FCC8AABBB}</Project>
+      <Name>VuelingExam.Infrastructure.Contracts.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Infrastructure.DataModel\VuelingExam.Infrastructure.DataModel.csproj">
+      <Project>{44161CAF-FECD-45E2-9514-11F7C95142B0}</Project>
+      <Name>VuelingExam.Infrastructure.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VuelingExam.Infrastructure.Impl.Repository\VuelingExam.Infrastructure.Impl.Repository.csproj">
+      <Project>{DF32B6C5-DA98-4413-B4D1-C04A53997282}</Project>
+      <Name>VuelingExam.Infrastructure.Impl.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StringResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
